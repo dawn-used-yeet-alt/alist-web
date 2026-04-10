@@ -275,6 +275,13 @@ export const side_menu_items: SideMenuItem[] = [
     component: lazy(() => import("./shares")),
   },
   {
+    title: "Folder Shares",
+    icon: TbLink,
+    to: "/@manage/folder-shares",
+    role: UserRole.ADMIN,
+    component: lazy(() => import("./SandboxedShares")),
+  },
+  {
     title: "manage.sidemenu.storages",
     icon: CgDatabase,
     to: "/@manage/storages",

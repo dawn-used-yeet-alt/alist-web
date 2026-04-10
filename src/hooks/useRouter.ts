@@ -11,6 +11,8 @@ import { encodePath, joinBase, pathDir, pathJoin, trimBase } from "~/utils"
 import { clearHistory } from "~/store"
 import { me } from "~/store"
 
+import { isShareMode, shareRootPath } from "~/store/share"
+
 const useRouter = () => {
   const navigate = useNavigate()
   const location = useLocation()
@@ -24,6 +26,13 @@ const useRouter = () => {
       ignore_root?: boolean,
       options?: Partial<NavigateOptions>,
     ) => {
+      if (isShareMode()) {
+        const root = shareRootPath()
+        if (root && !path.startsWith(root) && !path.startsWith("/@login")) {
+          window.location.href = joinBase("/@login")
+          return
+        }
+      }
       if (!ignore_root && path.startsWith("/")) {
         path = joinBase(path)
       }

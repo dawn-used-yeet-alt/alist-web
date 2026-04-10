@@ -29,7 +29,10 @@ const Login = lazy(() => import("~/pages/login"))
 const Test = lazy(() => import("~/pages/test"))
 const SharePage = lazy(() => import("~/pages/share"))
 
+import { initShareMode } from "~/store/share"
+ 
 const App: Component = () => {
+  initShareMode()
   const t = useT()
   globalStyles()
   const [, { add }] = useI18n()

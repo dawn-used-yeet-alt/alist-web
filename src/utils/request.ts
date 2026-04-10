@@ -16,15 +16,26 @@ const instance = axios.create({
 
 import { getClientId } from "./client-id"
 
+function getShareToken(): string | null {
+  const match = document.cookie.match(/share_token=([^;]+)/)
+  return match ? match[1] : null
+}
+
 instance.interceptors.request.use(
   (config) => {
-    // 添加 Client-Id 请求头
     if (config.headers) {
       config.headers["Client-Id"] = getClientId()
-      // getClientId()
+      const token = getShareToken()
+      if (token) {
+        config.headers["X-Share-Token"] = token
+      }
     } else {
-      config.headers = { "Client-Id": getClientId() }
-      // { "Client-Id": getClientId() }
+      const headers: any = { "Client-Id": getClientId() }
+      const token = getShareToken()
+      if (token) {
+        headers["X-Share-Token"] = token
+      }
+      config.headers = headers
     }
     return config
   },

@@ -11,9 +11,19 @@ import { usePath, useRouter, useT } from "~/hooks"
 import { getSetting, local } from "~/store"
 import { encodePath, hoverColor, joinBase } from "~/utils"
 
+import { isShareMode, shareRootPath } from "~/store/share"
+
 export const Nav = () => {
   const { pathname } = useRouter()
-  const paths = createMemo(() => ["", ...pathname().split("/").filter(Boolean)])
+  const paths = createMemo(() => {
+    const fullPaths = pathname().split("/").filter(Boolean)
+    if (isShareMode()) {
+      const root = shareRootPath() || ""
+      const rootParts = root.split("/").filter(Boolean)
+      return ["", ...fullPaths.slice(rootParts.length)]
+    }
+    return ["", ...fullPaths]
+  })
   const t = useT()
   const { setPathAs } = usePath()
 

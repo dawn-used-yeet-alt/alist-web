@@ -595,3 +595,26 @@ export const cleanSessions = (data?: {
 }): PEmptyResp => {
   return r.post("/admin/session/clean", data || {})
 }
+export interface SandboxedShare {
+  id: number
+  token: string
+  path: string
+  label: string
+  expires_at: string
+}
+
+export const createSandboxedShare = (payload: {
+  path: string
+  label?: string
+  expires_in?: number
+}): PResp<SandboxedShare> => {
+  return r.post("/admin/share/create", payload)
+}
+
+export const getSandboxedShareList = (): PResp<SandboxedShare[]> => {
+  return r.get("/admin/share/list")
+}
+
+export const deleteSandboxedShare = (id: number): PEmptyResp => {
+  return r.post(`/admin/share/delete/${id}`)
+}
