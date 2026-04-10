@@ -45,7 +45,7 @@ export const FolderShare = () => {
 
   const [loading, createShare] = useFetch(
     (path: string, label: string, expiresIn: number) =>
-      api.post("/admin/share", { path, label, expires_in: expiresIn }),
+      api.post("/admin/share/create", { path, label, expires_in: expiresIn }),
   )
 
   const submit = async () => {
@@ -56,7 +56,9 @@ export const FolderShare = () => {
     }
     const resp = await createShare(sharePath(), label(), hours)
     handleResp(resp, (data) => {
-      const link = `${window.location.origin}/s/redeem?token=${data.token}`
+      const link = `${window.location.origin}${
+        window.location.pathname.split("/@manage")[0]
+      }?share_token=${data.token}`
       setShareLink(link)
       notify.success(t("global.success"))
     })
