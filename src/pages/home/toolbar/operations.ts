@@ -9,6 +9,7 @@ import { AiOutlineCloudDownload } from "solid-icons/ai"
 import { ImMoveUp } from "solid-icons/im"
 import { BiRegularRename } from "solid-icons/bi"
 import { HiOutlineFolderRemove } from "solid-icons/hi"
+import { RiSystemShareForwardLine } from "solid-icons/ri"
 
 export interface Operations {
   [key: string]: {
@@ -27,7 +28,7 @@ export const operations: Operations = {
   s3_restore: { icon: TbSun, color: "$warning9" },
   copy_link: { icon: TbLink, color: "$info9" },
   share: { icon: TbLink, color: "$accent9" },
-  folder_share: { icon: TbLink, color: "$success9" }, // Using TbLink for now, or TbFolderPlus if available. Actually I'll check icons.
+  folder_share: { icon: RiSystemShareForwardLine, color: "$success9" },
   mkdir: { icon: CgFolderAdd, p: true },
   recursive_move: { icon: ImMoveUp, p: true },
   remove_empty_directory: { icon: HiOutlineFolderRemove, p: true },
