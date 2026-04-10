@@ -68,6 +68,13 @@ export const Right = () => {
                 }}
               />
               <RightIcon
+                as={operations.folder_share.icon}
+                tips="Sandboxed Share"
+                onClick={() => {
+                  bus.emit("tool", "folder_share")
+                }}
+              />
+              <RightIcon
                 as={operations.new_file.icon}
                 tips="new_file"
                 onClick={() => {

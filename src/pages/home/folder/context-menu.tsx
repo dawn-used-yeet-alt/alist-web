@@ -237,6 +237,22 @@ export const ContextMenu = () => {
           >
             <ItemContent name="share" />
           </Item>
+          <Show when={selectedObjs()[0].is_dir && UserMethods.is_admin(me())}>
+            <Item
+              onClick={({ props }) => {
+                const targetPath =
+                  props.path && props.path.startsWith("/")
+                    ? props.path
+                    : pathJoin(getCurrentPath(), props.name)
+                // For Sandboxed Share, we can emit a tool event with the path
+                // But our FolderShare modal currently uses pathname()
+                // I'll update FolderShare to handle an optional path
+                bus.emit("tool", { name: "folder_share", path: targetPath })
+              }}
+            >
+              <ItemContent name="folder_share" />
+            </Item>
+          </Show>
           <Item
             onClick={({ props }) => {
               if (props.is_dir) {

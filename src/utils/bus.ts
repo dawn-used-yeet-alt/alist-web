@@ -4,7 +4,7 @@ type Events = {
   gallery: string
   refresh: void
   refresh_labels: void
-  tool: string
+  tool: string | { name: string; [key: string]: any }
   pathname: string
   to: string
   share: {

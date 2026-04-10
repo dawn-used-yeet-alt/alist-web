@@ -27,6 +27,7 @@ export const operations: Operations = {
   s3_restore: { icon: TbSun, color: "$warning9" },
   copy_link: { icon: TbLink, color: "$info9" },
   share: { icon: TbLink, color: "$accent9" },
+  folder_share: { icon: TbLink, color: "$success9" }, // Using TbLink for now, or TbFolderPlus if available. Actually I'll check icons.
   mkdir: { icon: CgFolderAdd, p: true },
   recursive_move: { icon: ImMoveUp, p: true },
   remove_empty_directory: { icon: HiOutlineFolderRemove, p: true },
