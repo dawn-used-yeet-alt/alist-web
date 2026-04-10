@@ -15,7 +15,7 @@ import {
 } from "@hope-ui/solid"
 import { createSignal, onCleanup, Show } from "solid-js"
 import { useFetch, useRouter, useT, useUtil } from "~/hooks"
-import { api, bus, handleResp, notify } from "~/utils"
+import { createSandboxedShare, bus, handleResp, notify } from "~/utils"
 
 export const FolderShare = () => {
   const { copy } = useUtil()
@@ -45,7 +45,7 @@ export const FolderShare = () => {
 
   const [loading, createShare] = useFetch(
     (path: string, label: string, expiresIn?: number) =>
-      api.post("/admin/share/create", {
+      createSandboxedShare({
         path,
         label,
         expires_in: expiresIn,
