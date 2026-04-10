@@ -44,24 +44,41 @@ export const FolderShare = () => {
   })
 
   const [loading, createShare] = useFetch(
-    (path: string, label: string, expiresIn: number) =>
-      api.post("/admin/share/create", { path, label, expires_in: expiresIn }),
+    (path: string, label: string, expiresIn?: number) =>
+      api.post("/admin/share/create", {
+        path,
+        label,
+        expires_in: expiresIn,
+      }),
   )
 
   const submit = async () => {
-    const hours = parseInt(expiresIn())
-    if (isNaN(hours)) {
+    const path = sharePath()
+    if (!path) {
+      notify.error("Path is required")
+      return
+    }
+    const hoursStr = expiresIn()
+    const hours = hoursStr ? parseInt(hoursStr) : undefined
+    if (hoursStr && isNaN(hours as number)) {
       notify.error("Invalid expiration hours")
       return
     }
-    const resp = await createShare(sharePath(), label(), hours)
-    handleResp(resp, (data) => {
-      const link = `${window.location.origin}${
-        window.location.pathname.split("/@manage")[0]
-      }?share_token=${data.token}`
-      setShareLink(link)
-      notify.success(t("global.success"))
-    })
+
+    const resp = await createShare(path, label(), hours)
+    handleResp(
+      resp,
+      (data) => {
+        const link = `${window.location.origin}${
+          window.location.pathname.split("/@manage")[0]
+        }?share_token=${data.token}`
+        setShareLink(link)
+        notify.success(t("global.success"))
+      },
+      (err) => {
+        notify.error(`Failed to create share: ${err}`)
+      },
+    )
   }
 
   return (
