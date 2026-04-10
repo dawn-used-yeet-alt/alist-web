@@ -14,10 +14,11 @@ import {
   useColorModeValue,
 } from "@hope-ui/solid"
 import { createSignal, onCleanup, Show } from "solid-js"
-import { useFetch, useRouter, useT } from "~/hooks"
-import { api, bus, handleResp, notify, copyToClipboard } from "~/utils"
+import { useFetch, useRouter, useT, useUtil } from "~/hooks"
+import { api, bus, handleResp, notify } from "~/utils"
 
 export const FolderShare = () => {
+  const { copy } = useUtil()
   const { isOpen, onOpen, onClose } = createDisclosure()
   const [sharePath, setSharePath] = createSignal("")
   const [label, setLabel] = createSignal("")
@@ -116,7 +117,7 @@ export const FolderShare = () => {
           >
             <Button
               onClick={() => {
-                copyToClipboard(shareLink())
+                copy(shareLink())
               }}
             >
               Copy Link
